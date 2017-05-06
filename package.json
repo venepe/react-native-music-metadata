@@ -1,0 +1,22 @@
+{
+  "name": "react-native-music-metadata",
+  "version": "0.0.1",
+  "description": "React Native module for getting the music metadata on iOS and Android",
+  "main": "track.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/venepe/react-native-music-metadata.git"
+  },
+  "keywords": [
+    "react-native",
+    "react-component",
+    "metadata",
+    "music",
+    "track"
+  ],
+  "author": "Vernon Pearson <vernon.pearson8@gmail.com> (https://github.com/venepe)",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": ">=0.8.0"
+  }
+}
