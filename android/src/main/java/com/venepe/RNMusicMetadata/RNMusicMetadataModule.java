@@ -33,6 +33,7 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
         String title = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
         String artist = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
         String albumName = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+        String albumArtist = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);
         Double duration = Double.valueOf(meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000.0;
 
         // Creates the returnable objects for Javascript
@@ -40,6 +41,7 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
         songMap.putString("title", title);
         songMap.putString("artist", artist);
         songMap.putString("albumName", albumName);
+        songMap.putString("albumArtist", albumArtist);
         songMap.putDouble("duration", duration);
         songMap.putString("uri", path);
 

@@ -1,7 +1,7 @@
 {
   "name": "react-native-music-metadata",
   "version": "0.0.1",
-  "description": "React Native module for getting the music metadata on iOS and Android",
+  "description": "React Native module for reading the music metadata on iOS and Android",
   "main": "track.js",
   "repository": {
     "type": "git",
