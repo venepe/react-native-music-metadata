@@ -17,6 +17,8 @@ import com.facebook.react.bridge.WritableMap;
  */
 public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
 
+    private static final String RN_MUSIC_METADATA_ERROR = "RN_MUSIC_METADATA_ERROR";
+
     @Override
     public String getName() {
         return "RNMusicMetadata";
@@ -51,11 +53,16 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getMetadata(ReadableArray uris, Promise promise) {
         WritableArray songArray = Arguments.createArray();
-        for (int i = 0; i < uris.size(); i++) {
-            String uri = uris.getString(i);
-            WritableMap songMap = this.getData(uri);
-            songArray.pushMap(songMap);
+
+        try {
+            for (int i = 0; i < uris.size(); i++) {
+                String uri = uris.getString(i);
+                WritableMap songMap = this.getData(uri);
+                songArray.pushMap(songMap);
+            }
+            promise.resolve(songArray);
+        } catch (Exception e) {
+            promise.reject(RN_MUSIC_METADATA_ERROR, e);
         }
-        promise.resolve(songArray);
     }
 }
