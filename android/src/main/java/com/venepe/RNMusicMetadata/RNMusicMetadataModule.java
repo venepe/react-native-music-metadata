@@ -2,6 +2,7 @@ package com.venepe.RNMusicMetadata;
 
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.util.Base64;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -26,6 +27,10 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
         super(reactContext);
     }
 
+    private String convertToBase64(byte[] bytes) {
+        return Base64.encodeToString(bytes, Base64.NO_WRAP);
+      }
+
     private WritableMap getData(String path) {
         Uri uri = Uri.parse(path);
         MediaMetadataRetriever meta = new MediaMetadataRetriever();
@@ -35,6 +40,7 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
         String albumName = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
         String albumArtist = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);
         Double duration = Double.valueOf(meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000.0;
+        byte[] bytes = meta.getEmbeddedPicture();
 
         // Creates the returnable objects for Javascript
         WritableMap songMap = Arguments.createMap();
@@ -44,6 +50,11 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
         songMap.putString("albumArtist", albumArtist);
         songMap.putDouble("duration", duration);
         songMap.putString("uri", path);
+        if (bytes != null) {
+            songMap.putString("artwork", convertToBase64(bytes));
+        } else {
+            songMap.putString("artwork", "");
+        }
 
         return songMap;
     }
