@@ -76,7 +76,7 @@ RNMusicMetadata.getMetadata(['/path/to/your/track.mp3'])
     tracks.forEach((track) => {
       console.log(`${track.title} by ${track.artist}`);
     });
-  });
+  })
   .catch((err) => {
     console.error(err);
   });
