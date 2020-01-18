@@ -48,6 +48,17 @@ RCT_EXPORT_METHOD(getMetadata:(NSArray *)uris resolver:(RCTPromiseResolveBlock)r
             if ([[item commonKey] isEqualToString:@"albumArtist"]) {
                 [songDictionary setValue:[NSString stringWithString:(NSString *)[item value]] forKey:@"albumArtist"];
             }
+            if ([[item commonKey] isEqualToString:@"artwork"]) {
+              UIImage *img = nil;
+              if ([item.keySpace isEqualToString:AVMetadataKeySpaceiTunes]) {
+                img = [UIImage imageWithData:[item.value copyWithZone:nil]];
+              }
+              else { // if ([item.keySpace isEqualToString:AVMetadataKeySpaceID3]) {
+                NSData *data = [(NSDictionary *)[item value] objectForKey:@"data"];
+                img = [UIImage imageWithData:data]  ;
+              }
+              [songDictionary setValue:[NSString stringWithString:(NSString *)[img]] forKey:@"artwork"];
+            }
         }
     }
 
