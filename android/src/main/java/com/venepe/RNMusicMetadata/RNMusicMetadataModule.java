@@ -3,6 +3,7 @@ package com.venepe.RNMusicMetadata;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.util.Base64;
+import java.util.HashMap;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -34,7 +35,7 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
     private WritableMap getData(String path) {
         Uri uri = Uri.parse(path);
         MediaMetadataRetriever meta = new MediaMetadataRetriever();
-        meta.setDataSource(getReactApplicationContext(), uri);
+        if(isContentUri(uri)) meta.setDataSource(getReactApplicationContext(), uri); else meta.setDataSource(path, new HashMap<String, String>());
         String title = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
         String artist = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
         String albumName = meta.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
@@ -68,5 +69,14 @@ public class RNMusicMetadataModule extends ReactContextBaseJavaModule {
             songArray.pushMap(songMap);
         }
         promise.resolve(songArray);
+    }
+
+    private boolean isContentUri(Uri uri) {
+        boolean ret = false;
+        if(uri != null) {
+            String uriSchema = uri.getScheme();
+            if("content".equalsIgnoreCase(uriSchema)) ret = true;
+        }
+        return ret;
     }
 }

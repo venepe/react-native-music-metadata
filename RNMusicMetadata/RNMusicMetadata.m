@@ -48,6 +48,10 @@ RCT_EXPORT_METHOD(getMetadata:(NSArray *)uris resolver:(RCTPromiseResolveBlock)r
             if ([[item commonKey] isEqualToString:@"albumArtist"]) {
                 [songDictionary setValue:[NSString stringWithString:(NSString *)[item value]] forKey:@"albumArtist"];
             }
+            if ([[item commonKey] isEqualToString:@"artwork"]) {
+                NSString *img = [(NSData*)item.value base64EncodedStringWithOptions:0];
+                [songDictionary setValue:img forKey:@"artwork"];
+            }
         }
     }
 
