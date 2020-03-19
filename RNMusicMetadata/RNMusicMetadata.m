@@ -55,11 +55,10 @@ RCT_EXPORT_METHOD(getMetadata:(NSArray *)uris resolver:(RCTPromiseResolveBlock)r
         }
     }
 
-    NSURL *assetURL = [NSURL fileURLWithPath:uri];
-    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:assetURL error:nil];
-    NSNumber *duration = [NSNumber numberWithDouble:[audioPlayer duration]];
+    CMTime audioDuration = asset.duration;
+    NSNumber *duration = [NSNumber numberWithFloat:CMTimeGetSeconds(audioDuration)];
     [songDictionary setValue:duration forKey:@"duration"];
-
+    
     [songDictionary setValue:uri forKey:@"uri"];
 
     return songDictionary;
